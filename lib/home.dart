@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_mentor_quiz_app_tut/answer.dart';
+//import 'answer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
               ),
               child: Center(
                 child: Text(
-                  _questions[_questionIndex]['question'],
+                  _questions[_questionIndex]['question'].toString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -110,19 +110,15 @@ class _HomeState extends State<Home> {
                     as List<Map<String, Object>>)
                 .map(
               (answer) => Answer(
-                answerText: answer['answerText'],
-                answerColor: answerWasSelected
-                    ? answer['score']
-                        ? Colors.green
-                        : Colors.red
-                    : null,
+                answerText: answer['answerText'].toString(),
+                answerColor: Colors.blue,
                 answerTap: () {
                   // if answer was already selected then nothing happens onTap
                   if (answerWasSelected) {
                     return;
                   }
                   //answer is being selected
-                  _questionAnswered(answer['score']);
+                  _questionAnswered(answer['score'] as bool);
                 },
               ),
             ),
@@ -135,13 +131,13 @@ class _HomeState extends State<Home> {
                 if (!answerWasSelected) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
-                        'Por favor, selecciona una respuesta antes de pasar a la siguiente pregunta'),
+                        'Please select an answer before moving to the next question.'),
                   ));
                   return;
                 }
                 _nextQuestion();
               },
-              child: Text(endOfQuiz ? 'Reiniciar Quiz' : 'Siguiente pregunta'),
+              child: Text(endOfQuiz ? 'Restart Quiz' : 'Next Question'),
             ),
             Container(
               padding: EdgeInsets.all(20.0),
@@ -157,7 +153,7 @@ class _HomeState extends State<Home> {
                 color: correctAnswerSelected ? Colors.green : Colors.red,
                 child: Center(
                   child: Text(
-                    correctAnswerSelected ? 'Correcto!' : 'Incorrecto :/',
+                    correctAnswerSelected ? 'Correct!' : 'Incorrect :/',
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -174,8 +170,8 @@ class _HomeState extends State<Home> {
                 child: Center(
                   child: Text(
                     _totalScore > 4
-                        ? 'Felicidades! Tu puntuación final es: $_totalScore'
-                        : 'Tu puntuación final es: $_totalScore. Mejor suerte la próxima!',
+                        ? 'Congratulations! Your final score is: $_totalScore'
+                        : 'Your final score is: $_totalScore. Better luck next time!',
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -271,11 +267,14 @@ final _questions = const [
 class Answer extends StatelessWidget {
   final String answerText;
   final Color answerColor;
-  final Function answerTap;
+  final VoidCallback answerTap;
 
-  Answer({this.answerText, this.answerColor, this.answerTap});
+  Answer({
+    required this.answerText,
+    required this.answerColor,
+    required this.answerTap,
+  });
 
-  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: answerTap,
