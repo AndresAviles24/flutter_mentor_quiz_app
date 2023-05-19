@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Flutter Mentor Quiz App',
+          'Quiz Minigame',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -135,13 +135,13 @@ class _HomeState extends State<Home> {
                 if (!answerWasSelected) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
-                        'Please select an answer before going to the next question'),
+                        'Por favor, selecciona una respuesta antes de pasar a la siguiente pregunta'),
                   ));
                   return;
                 }
                 _nextQuestion();
               },
-              child: Text(endOfQuiz ? 'Restart Quiz' : 'Next Question'),
+              child: Text(endOfQuiz ? 'Reiniciar Quiz' : 'Siguiente pregunta'),
             ),
             Container(
               padding: EdgeInsets.all(20.0),
@@ -157,9 +157,7 @@ class _HomeState extends State<Home> {
                 color: correctAnswerSelected ? Colors.green : Colors.red,
                 child: Center(
                   child: Text(
-                    correctAnswerSelected
-                        ? 'Well done, you got it right!'
-                        : 'Wrong :/',
+                    correctAnswerSelected ? 'Correcto!' : 'Incorrecto :/',
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -176,8 +174,8 @@ class _HomeState extends State<Home> {
                 child: Center(
                   child: Text(
                     _totalScore > 4
-                        ? 'Congratulations! Your final score is: $_totalScore'
-                        : 'Your final score is: $_totalScore. Better luck next time!',
+                        ? 'Felicidades! Tu puntuación final es: $_totalScore'
+                        : 'Tu puntuación final es: $_totalScore. Mejor suerte la próxima!',
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
